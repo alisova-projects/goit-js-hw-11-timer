@@ -1,0 +1,31 @@
+{
+  "name": "js-22",
+  "version": "1.0.0",
+  "description": "- Асинхронность в JavaScript   - Однопоточность и многопоточность   - Отоложенные вызовы (планирование)   - Web workers для «многопоточности»   - Service workers для «перехвата» запросов от документа (кеширование)   - [Статья](https://bitsofco.de/web-workers-vs-service-workers-vs-worklets) - Планирование: window.setTimeout() и window.setInterval() - Цикл событий (event loop)   - [Площадка](http://latentflip.com/loupe)   - setTimeout(N) и setTimeout(0) - Мастерская: оповещение - Мастерская: «надоедалка» подписки   - Bootstrap для CSS   - Bootstrap Native для JS (https://thednp.github.io/bootstrap.native) - Встроенный объект Date   - Создание   - Разница времени   - Date.now() и new Date().getTime()   - [Библиотека date-fns](https://date-fns.org/) - Мастерская: таймер",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /goit-js-hw-11-timer/",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alisova-projects/goit-js-hw-11-timer.git"
+  },
+  "keywords": [],
+  "author": "Elena Alisova <elenie@ukr.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alisova-projects/goit-js-hw-11-timer/issues"
+  },
+  "homepage": "https://alisova-projects.github.io/goit-js-hw-11-timer",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-nuke-dist": "^1.0.1"
+  },
+  "dependencies": {
+    "bootstrap.native": "^3.0.13",
+    "gh-pages": "^3.1.0"
+  }
+}
