@@ -3,12 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jura:wght@600&display=swap"
+      rel="stylesheet"
+    />
     <title>Таймер обратного отсчета</title>
   </head>
   <body>
-    <div class="timer">
-      <p class="clockface js-clockface"></p>
+    <h1 class="title">ГоуАйти финишд:</h1>
+
+    <div class="timer" id="timer-1">
+      <div class="field">
+        <span class="value" data-value="days">11</span>
+        <span class="label">Days</span>
+      </div>
+
+      <div class="field">
+        <span class="value" data-value="hours">11</span>
+        <span class="label">Hours</span>
+      </div>
+
+      <div class="field">
+        <span class="value" data-value="mins">11</span>
+        <span class="label">Minutes</span>
+      </div>
+
+      <div class="field">
+        <span class="value" data-value="secs">11</span>
+        <span class="label">Seconds</span>
+      </div>
     </div>
+
+    <p class="text">
+      в Лондоне два прохожих: - Сорри, хау мач из воч? - Сыскс воч. - Сач мач? -
+      Хум хау. - МГИМО финишд? - Аск!
+    </p>
 
     <script src="index.js"></script>
   </body>

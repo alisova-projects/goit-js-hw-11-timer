@@ -1,85 +1,63 @@
 import '../src/css/common.css';
 
-const refs = {
-  startBtn: document.querySelector('button[data-action-start]'),
-  stopBtn: document.querySelector('button[data-action-stop]'),
-  clockface: document.querySelector('.js-clockface'),
-};
+// создаём класс
+class CountdownTimer{
+    constructor({ selector, targetDate}){
+        this.intervalId = null;
+        this.selector = document.querySelector(`${selector}`);
+        this.targetDate = targetDate;
 
-class Timer {
-  constructor({ onTick }) {
-    this.intervalId = null;
-    this.isActive = false;
-    this.onTick = onTick;
-
-    this.init();
-  }
-
-  init() {
-    const time = this.getTimeComponents(0);
-    this.onTick(time);
-  }
-
-  start() {
-    if (this.isActive) {
-      return;
+        this.init();
     }
 
-    const startTime = Date.now();
-    this.isActive = true;
+// очищаем интерфейс до формата 00:00:00
+    init() {
+        const time = this.getTimeComponents(0);
+        this.updateClockFace(time);
+    }
 
-    this.intervalId = setInterval(() => {
-      const currentTime = Date.now();
-      const deltaTime = currentTime - startTime;
-      const time = this.getTimeComponents(deltaTime);
+// таймер
+    start() {
+        this.intervalId = setInterval(() => {
+            const currentTime = Date.now();
+            const deltaTime = this.targetDate - currentTime;
+            
+            const time = this.getTimeComponents(deltaTime);
+            this.updateClockFace(time);
+        }, 1000);
+    }
 
-      this.onTick(time);
-    }, 1000);
-  }
+// обновляем интерфейс
+    updateClockFace({ days, hours, mins, secs }) {
+        this.selector.querySelector('[data-value="days"]').textContent = days;
+        this.selector.querySelector('[data-value="hours"]').textContent = hours;
+        this.selector.querySelector('[data-value="mins"]').textContent = mins;
+        this.selector.querySelector('[data-value="secs"]').textContent = secs;
+    }
 
-  stop() {
-    clearInterval(this.intervalId);
-    this.isActive = false;
-    const time = this.getTimeComponents(0);
-    this.onTick(time);
-  }
+// принимает время в мс, вычисляет наеобходимые величины времени
+    getTimeComponents(time) {
+        const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
+        const hours = this.pad(
+        Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        );
+        const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
+        const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
 
-  /*
-   * - Принимает время в миллисекундах
-   * - Высчитывает сколько в них вмещается часов/минут/секунд
-   * - Возвращает обьект со свойствами hours, mins, secs
-   * - Адская копипаста со стека 💩
-   */
-  getTimeComponents(time) {
-    const hours = this.pad(
-      Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-    );
-    const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-    const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
-
-    return { hours, mins, secs };
-  }
-
-  /*
-   * Принимает число, приводит к строке и добавляет в начало 0 если число меньше 2-х знаков
-   */
-  pad(value) {
-    return String(value).padStart(2, '0');
-  }
+        return { days, hours, mins, secs };
+    }
+    
+// принимает число, приводит к строке и добавляет в начало 0 если число меньше 2-х знаков
+    pad(value) {
+        return String(value).padStart(2, '0');
+    }
 }
 
-const timer = new Timer({
-  onTick: updateClockface,
+// создаём экземпляр
+const timer = new CountdownTimer({
+  selector: '#timer-1',
+  targetDate: new Date('Feb 28, 2021 23:59:59'),
 });
 
-refs.startBtn.addEventListener('click', timer.start.bind(timer));
-refs.stopBtn.addEventListener('click', timer.stop.bind(timer));
-
-/*
- * - Принимает время в миллисекундах
- * - Высчитывает сколько в них вмещается часов/минут/секунд
- * - Рисует интерфейс
- */
-function updateClockface({ hours, mins, secs }) {
-  refs.clockface.textContent = `${hours}:${mins}:${secs}`;
-}
+// запускаем при загрузке страницы
+window.onload = timer.start();
