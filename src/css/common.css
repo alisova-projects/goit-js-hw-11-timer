@@ -39,8 +39,11 @@ img {
   font-family: sans-serif;
   color: #fff;
 
-  margin-left: auto;
-  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -3px;
+  margin-right: -3px;
 
   font-weight: 100;
   text-align: center;
@@ -51,8 +54,10 @@ img {
   padding: 10px;
   border-radius: 3px;
   background: #111011;
-  display: inline-block;
+
   width: 150px;
+  margin-left: 3px;
+  margin-right: 3px;
 }
 
 .value {
